@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>let's get a Promise</title>
+    <link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Quicksand:wght@300;500&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- 1. Dark Aesthetic Background --- */
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* Deep Space / Midnight Gradient */
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            font-family: 'Quicksand', sans-serif;
+            overflow: hidden;
+            color: white;
+            position: relative;
+        }
+
+        /* Moving Stars / Fireflies Background */
+        .firefly {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #fff;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #fff, 0 0 20px #ff00de;
+            animation: fly 10s infinite linear;
+            opacity: 0;
+        }
+
+        @keyframes fly {
+            0% { transform: translateY(110vh) translateX(-10vw); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(-10vh) translateX(10vw); opacity: 0; }
+        }
+
+        /* --- 2. Glassmorphism Container --- */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 50px 40px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            text-align: center;
+            max-width: 400px;
+            width: 85%;
+            z-index: 10;
+            transition: transform 0.4s ease, height 0.4s ease;
+        }
+
+        /* Typography */
+        h1 {
+            font-family: 'symphonie calligraphy demo', cursive;
+            font-size: 3rem;
+            margin: 0 0 20px 0;
+            background: -webkit-linear-gradient(#fff, #e0c3fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(224, 195, 252, 0.4);
+        }
+
+        p {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+            margin-bottom: 40px;
+        }
+
+        /* --- 3. The Neon Button --- */
+        .neon-btn {
+            background: transparent;
+            color: #fff;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 500;
+            font-size: 1.1rem;
+            padding: 15px 40px;
+            border: 2px solid #c471ed;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(196, 113, 237, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .neon-btn:hover {
+            background: #c471ed;
+            box-shadow: 0 0 30px rgba(196, 113, 237, 0.6), 0 0 60px rgba(196, 113, 237, 0.4);
+            transform: scale(1.05);
+            border-color: #c471ed;
+        }
+
+        /* --- 4. Page 2 Animations --- */
+        .hidden {
+            display: none;
+            opacity: 0;
+        }
+
+        .fade-in {
+            animation: fadeIn 2s forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- 5. The CSS Promise Ring --- */
+        .ring-box {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 30px auto;
+        }
+
+        .ring-band {
+            width: 70px;
+            height: 70px;
+            border: 4px solid #ffd700;
+            border-radius: 50%;
+            position: absolute;
+            top: 30px;
+            left: 15px;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.5), inset 0 0 10px rgba(255, 215, 0, 0.2);
+        }
+
+        .diamond {
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(135deg, #fff 0%, #a1c4fd 100%);
+            position: absolute;
+            top: 20px;
+            left: 40px;
+            transform: rotate(45deg);
+            box-shadow: 0 0 20px 5px rgba(255, 255, 255, 0.8), 0 0 40px 10px rgba(161, 196, 253, 0.4);
+            animation: pulse-shine 2s infinite alternate;
+        }
+
+        @keyframes pulse-shine {
+            0% { transform: rotate(45deg) scale(1); box-shadow: 0 0 15px rgba(255, 255, 255, 0.6); }
+            100% { transform: rotate(45deg) scale(1.2); box-shadow: 0 0 30px rgba(255, 255, 255, 1); }
+        }
+
+        .promise-text {
+            font-family: 'Parisienne', cursive;
+            font-size: 1.8rem;
+            color: #e0c3fc;
+            text-shadow: 0 0 10px rgba(224, 195, 252, 0.5);
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="background-effects"></div>
+
+    <div class="glass-card">
+        <div id="page1">
+            <h1>Promise Day</h1>
+            <p>I have a promise tucked away in my heart, <br>waiting just for you...</p>
+            <button class="neon-btn" onclick="revealSurprise()">Make a Promise 💍</button>
+        </div>
+
+        <div id="page2" class="hidden">
+            <div class="ring-box">
+                <div class="ring-band"></div>
+                <div class="diamond"></div>
+            </div>
+            <div class="promise-text">"I Promise..."</div>
+            <p>"To handle your heart with care,<br>to be your calm in the chaos,<br>and to love you, always."</p>
+            <p style="font-size: 0.8rem; color: #aaa; margin-top: 30px;">Happy Promise Day ❤️</p>
+        </div>
+    </div>
+
+    <script>
+        // 1. Generate Fireflies for Aesthetic Background
+        const bg = document.getElementById('background-effects');
+        for(let i=0; i<20; i++){
+            let div = document.createElement('div');
+            div.className = 'firefly';
+            div.style.left = Math.random() * 100 + 'vw';
+            div.style.animationDuration = (Math.random() * 5 + 5) + 's';
+            div.style.animationDelay = (Math.random() * 5) + 's';
+            bg.appendChild(div);
+        }
+
+        // 2. Page Transition Logic
+        function revealSurprise() {
+            const p1 = document.getElementById('page1');
+            const p2 = document.getElementById('page2');
+            
+            // Fade out page 1
+            p1.style.opacity = '0';
+            p1.style.transition = 'opacity 0.5s ease';
+
+            setTimeout(() => {
+                p1.style.display = 'none';
+                
+                // Show page 2
+                p2.style.display = 'block';
+                p2.classList.remove('hidden');
+                p2.classList.add('fade-in');
+            }, 500);
+        }
+    </script>
+</body>
+</html>
